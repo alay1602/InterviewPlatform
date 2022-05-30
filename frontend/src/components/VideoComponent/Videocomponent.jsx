@@ -9,7 +9,7 @@ const Videocomponent = () => {
 
   const getVideo = () => {
     navigator.mediaDevices
-      .getUserMedia( {video:true,audio:true} )
+      .getUserMedia( {video:true} )
       .then(stream => {
         let video = videoRef.current;
         video.srcObject = stream;
@@ -20,12 +20,12 @@ const Videocomponent = () => {
       });
   };
   return (
-    <div>
-        <div id="">
-        <video className="img-fluid"  ref={videoRef}  playsInline autoPlay controls>
+    <div className='d-flex border justify-content-center p-3'>
+       
+        <video className="img-fluid border-3 border rounded-4 border-dark"  ref={videoRef}  playsInline autoPlay controls>
       
         </video>
-    </div>
+ 
     </div>
   )
 }
