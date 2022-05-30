@@ -3,10 +3,11 @@ import "./bottombar.css"
 import Button from '@mui/material/Button';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import tel from "./telephone.png"
+import Chatbox from "../Chatbox/Chatbox";
 const Bottombar = () => {
   return (
-    <div className="">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div className="border-3 border rounded-4 border-dark">
+      <nav class="border-2 border rounded-4 navbar navbar-expand-lg navbar-dark bg-dark">
         <button
           class="navbar-toggler"
           type="button"
@@ -73,6 +74,14 @@ const Bottombar = () => {
               </div> */}
             </li>
           </ul>
+
+          <li class="nav-item">
+              {/* <a class="nav-link" href="#"> */}
+              {/* <Chatbox/> */}
+              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Chat</button>
+                        {/* <img src={tel} className="img-fluid" alt="" />      */}
+              {/* </a> */}
+            </li>
         </div>
       </nav>
     </div>
