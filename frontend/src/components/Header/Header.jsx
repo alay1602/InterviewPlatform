@@ -1,4 +1,5 @@
 import React from 'react'
+import Notification from '../Notification/Notification'
 
 const Header = () => {
   return (
@@ -7,6 +8,7 @@ const Header = () => {
       <a class="navbar-brand" href="#">
       <i class="fa-solid fa-screen-users"></i>
       </a>
+      <Notification/>
     </div>
   </nav></div>
   )

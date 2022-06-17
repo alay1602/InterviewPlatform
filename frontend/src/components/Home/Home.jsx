@@ -1,11 +1,13 @@
-import React from "react";
+import React,{useContext} from "react";
 import Bottombar from "../Bottombar/Bottombar";
 import Chatbox from "../Chatbox/Chatbox";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Videocomponent from "../VideoComponent/Videocomponent";
+import Webrtccontext from "../../context/webrtc/Webrtccontext";
 import "./home.css";
 const Home = () => {
+  const {name,callAccepted,myVideo,userVideo,callEnded,stream,call} = useContext(Webrtccontext);
   return (
     // <div className=' d-flex flex-nowrap  my-2 ' style={{"maxHeight":95+"vh"}}>
     //    <div className="d-flex">
@@ -24,11 +26,13 @@ const Home = () => {
           </div>
           <div className="row  ">
             <div class="col-md-6 container">
-              <Videocomponent />
+              {stream && (<Videocomponent video={myVideo}  />)}
+              
             </div>
             <div class="col-md-6  container">
-              <Videocomponent />
-              <Chatbox />
+              {callAccepted && !callEnded &&(    <Videocomponent video={userVideo} />)&&(  <Chatbox />)}
+          
+            
             </div>
 
           
