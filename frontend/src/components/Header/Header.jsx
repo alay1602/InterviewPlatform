@@ -1,6 +1,7 @@
 import React from 'react'
+import Contect from '../contect/Contect'
 import Notification from '../Notification/Notification'
-
+// import Contect from '../contect/Contect'
 const Header = () => {
   return (
     <div><nav class="navbar border-dark mx-2 border rounded-2 bg-light mb-3">
@@ -9,6 +10,7 @@ const Header = () => {
       <i class="fa-solid fa-screen-users"></i>
       </a>
       <Notification/>
+      <Contect/>
     </div>
   </nav></div>
   )

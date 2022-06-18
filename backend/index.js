@@ -33,7 +33,7 @@ app.get("/",(req,res)=>{
 // })
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id);
-
+     console.log(socket.id)
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
 	});
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
 		io.to(data.to).emit("callAccepted", data.signal)
 	});
 });
-server.listen(3000,()=>{
+server.listen(3001,()=>{
     console.log("server started");
 })  
 
