@@ -3,7 +3,7 @@ import Webrtccontext from "../../context/webrtc/Webrtccontext";
 
 // const Notifications = () => {
     const Notification = () => {
-const { answerCall, call, callAccepted } = useContext(Webrtccontext);
+const { answerCall, call, callAccepted,videoOn } = useContext(Webrtccontext);
         return (
     <>
     {call.isReceivingCall && !callAccepted && (
@@ -12,7 +12,7 @@ const { answerCall, call, callAccepted } = useContext(Webrtccontext);
         {/* <Button variant="contained" color="primary" onClick={answerCall}>
           Answer
         </Button> */}
-         <button className='dark' onClick={answerCall}>
+         <button className='dark' onClick={()=>{videoOn();answerCall();}}>
 Answer
          </button>
       </div>

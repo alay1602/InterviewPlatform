@@ -26,12 +26,34 @@ const Home = () => {
           </div>
           <div className="row  ">
             <div class="col-md-6 container">
-              {stream && (<Videocomponent video={myVideo}  />)}
+              {/* {stream && (<Videocomponent video={myVideo}  />)} */}
+              {stream && (
+                <div className="d-flex border justify-content-center p-3">
+                <video
+                  className="img-fluid border-3 border rounded-4 border-dark"
+                  ref={myVideo}
+                  muted
+                  playsInline
+                  autoPlay
+                  
+                ></video>
+              </div>
+              )}
               
             </div>
             <div class="col-md-6  container">
-              {callAccepted && !callEnded &&(    <Videocomponent video={userVideo} />)&&(  <Chatbox />)}
-          
+              {/* {callAccepted && !callEnded &&(    <Videocomponent video={userVideo} />)}
+               */}
+                {callAccepted && !callEnded &&( <div className="d-flex border justify-content-center p-3">
+                <video
+                  className="img-fluid border-3 border rounded-4 border-dark"
+                  ref={userVideo}
+                  playsInline
+                  autoPlay
+                
+                ></video>
+              </div>)}
+              <Chatbox />
             
             </div>
 
