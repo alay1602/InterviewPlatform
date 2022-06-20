@@ -39,7 +39,7 @@ const codesubmit= async(e)=>{
 }
 
   return (
-    <div className='row w-100'>
+    <div className='container row w-100'>
         <form onSubmit={codesubmit} style={{"height":700.4+"px"}}>
             Code:<textarea className="w-100 h-75"  ref={code}></textarea>
             <select onChange={setlang}  >
@@ -51,7 +51,10 @@ const codesubmit= async(e)=>{
               <option >go</option>
               <option >cs</option>
             </select>
+            <div className="container mt-2">
             Input:<textarea className="w-100 h-30"  ref={input}></textarea>
+            </div>
+           
             <button type='submit'>Execute</button>
         </form>
 
