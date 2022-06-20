@@ -7,7 +7,7 @@ import Chatbox from "../Chatbox/Chatbox";
 import Webrtcconnection from "../../context/webrtc/webrtcconnection";
 import Webrtccontext from "../../context/webrtc/Webrtccontext";
 const Bottombar = () => {
-  const {videoOn} = useContext(Webrtccontext);
+  const {videoOn,handlemessage} = useContext(Webrtccontext);
   return (
     <div className="border-3 border rounded-4 border-dark">
       <nav class="border-2 border rounded-4 navbar navbar-expand-lg navbar-dark bg-dark">
@@ -81,7 +81,7 @@ const Bottombar = () => {
           <li class="nav-item">
               {/* <a class="nav-link" href="#"> */}
               {/* <Chatbox/> */}
-              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Chat</button>
+              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onClick={handlemessage}>Chat</button>
                         {/* <img src={tel} className="img-fluid" alt="" />      */}
               {/* </a> */}
             </li>
