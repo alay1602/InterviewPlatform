@@ -12,25 +12,6 @@ app.use(cors());
 app.get("/",(req,res)=>{
     res.send("running");
 })
-// io.sockets.on("connection",socket=>{
-//    socket.emit("me",socket.id);
-//    socket.on("disconnect",()=>{
-//        socket.broadcast.emit("callended");
-//    })
-
-//    socket.on("calluser",(data)=>{
-//        io.to(data.userTocall).emit("callUser",{signal:data.signalData,from:data.from,name:data.name});
-
-
-//    })
-
-
-//    socket.on("answercall",(data)=>{
-//        io.to(data.to).emit("callAc",data.signal);
-//    })
-
-
-// })
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id);
      console.log(socket.id)
