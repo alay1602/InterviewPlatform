@@ -2,15 +2,19 @@ import Webrtccontext from "./Webrtccontext";
 import { io } from 'socket.io-client'
 import Peer from 'simple-peer'
 import React, { useEffect, useRef, useState } from 'react'
-
+import { unstable_composeClasses } from "@mui/material";
 const socket = io('http://localhost:3001');
 const Webrtcconnection = ({ children }) => {
+  const [otherUser, setOtherUser] = useState("");
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
   const [stream, setStream] = useState();
   const [name, setName] = useState('');
   const [call, setCall] = useState({});
   const [me, setMe] = useState('');
+  const [message, setmessage] = useState("")
+  // const [room, setroom] = useState("");
+  const [recivemessage, setrecivemessage] = useState("")
 
   const myVideo = useRef(null);
   const userVideo = useRef(null);
@@ -32,7 +36,7 @@ const Webrtcconnection = ({ children }) => {
     // .catch(function(err) {
     //    console.log(err);
     // });
-
+    
     videoOn();
    
     socket.on('me', (id) => setMe(id));
@@ -40,36 +44,22 @@ const Webrtcconnection = ({ children }) => {
     socket.on('callUser', ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, [socket]);
+    socket.on("recieve_message", (data) => {
+      console.log(data)
+      setrecivemessage(data.message);
+      // setTimeout(() => {
+      //   setrecivemessage("");
+      // }, 10000);
+    })
+    console.log(recivemessage)
+  }, []);
 
 
-  // const showMyFace=async ()=>{
-  //   let currentStream=new MediaStream()
-  //   currentStream= await navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-  //   // .then((currentStream) => {
 
-  //     myVideo.current.srcObject = currentStream;
-    
-
-  //   // }).then((currentStream) => {
-
-  //     setStream(currentStream);
-  //   // }).catch((err) => {
-  //   //   console.log(err);
-  //   // });
-
-  // }
-  // function showMyFace() {
-  //   navigator.mediaDevices.getUserMedia({audio:true, video:true})
-  //     .then(stream => myVideo.srcObject = stream)
-  //     // .then(stream => pc.addStream(stream))
-  //     .catch(function(err) {
-  //        console.log(err);
-  //     });
-  // }
+ 
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
-
+    setOtherUser(id);
     peer.on('signal', (data) => {
       socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
@@ -83,14 +73,20 @@ const Webrtcconnection = ({ children }) => {
 
       peer.signal(signal);
     });
-
+    // const message=()=>{
+    //   peer.on("connect",()=>{
+    //     peer.send("Hii This is Vatsal");
+    // })
+    // }
+  
+    // peer.on("data",(data)=>{console.log(data)})
     connectionRef.current = peer;
   };
 
 
   const answerCall = () => {
     setCallAccepted(true);
-
+    setOtherUser(call.from)
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on('signal', (data) => {
@@ -100,13 +96,29 @@ const Webrtcconnection = ({ children }) => {
     peer.on('stream', (currentStream) => {
       userVideo.current.srcObject = currentStream;
     });
-
+   
+  //  peer.on("data",(data)=>{
+  //   console.log(data)
+  //  })
     peer.signal(call.signal);
-
+    
     connectionRef.current = peer;
   };
 
-
+// const handlemessage=()=>{
+//   console.log(connectionRef.current)
+//   connectionRef.current.on("connect",()=>{
+//     console.log("connect")
+//     connectionRef.current.send("Hii this from calle")
+//    })
+//    connectionRef.current.on("data",(data)=>{
+//     console.log(data)
+//    })
+// }
+const sendMessage = () => {
+  console.log("runn")
+  socket.emit("send_message", {message,otherUser});
+};
   const leaveCall = () => {
     setCallEnded(true);
 
@@ -127,11 +139,16 @@ const Webrtcconnection = ({ children }) => {
     setName,
     callEnded,
     me,
+    // handlemessage,
     callUser,
     leaveCall,
     answerCall,
     // showMyFace
-    videoOn
+    videoOn,
+    message,
+    setmessage,
+    recivemessage,
+    sendMessage
   }} >
     {children}
   </Webrtccontext.Provider>)

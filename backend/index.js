@@ -45,6 +45,10 @@ io.on("connection", (socket) => {
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
 	});
+	socket.on("send_message",(data)=>{
+		console.log(data)
+		socket.to(data.otherUser).emit("recieve_message",data)
+	})
 });
 server.listen(3001,()=>{
     console.log("server started");
