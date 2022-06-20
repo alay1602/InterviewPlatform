@@ -12,6 +12,8 @@ app.use(cors());
 app.get("/",(req,res)=>{
     res.send("running");
 })
+
+//socket code
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id);
      console.log(socket.id)
