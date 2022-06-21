@@ -12,7 +12,7 @@ function App() {
   return (
  <>
 <Webrtcconnection>
-     <div className=' d-flex flex-nowrap  my-2 ' style={{"maxHeight":95+"vh"}}>
+     <div className=' d-flex flex-nowrap  my-2 ' style={{"maxHeight":100+"vh"}}>
        <div className="d-flex    ">
             <Sidebar />
           </div>
