@@ -32,6 +32,10 @@ io.on("connection", (socket) => {
 		console.log(data)
 		socket.to(data.otherUser).emit("recieve_message",data)
 	})
+	socket.on("code-change",(data)=>{
+		console.log(data)
+		socket.to(data.otherUser).emit("code-change",data.code)
+	})
 });
 server.listen(3001,()=>{
     console.log("server started");
