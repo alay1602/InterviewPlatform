@@ -1,10 +1,18 @@
 import Webrtccontext from "./Webrtccontext";
 import { io } from 'socket.io-client'
+import toast from 'react-hot-toast';
+import {
+  useLocation,
+  useNavigate,
+  Navigate,
+  useParams,
+} from 'react-router-dom';
 import Peer from 'simple-peer'
+import {initSocket} from "../../socket"
 import React, { useEffect, useRef, useState } from 'react'
 import { unstable_composeClasses } from "@mui/material";
-const socket = io('http://localhost:3001');
 const Webrtcconnection = ({ children }) => {
+  
   const [otherUser, setOtherUser] = useState("");
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
@@ -15,60 +23,71 @@ const Webrtcconnection = ({ children }) => {
   const [message, setmessage] = useState("")
   // const [room, setroom] = useState("");
   const [recivemessage, setrecivemessage] = useState("")
-
+  let socket=useRef(null)
   const myVideo = useRef(null);
   const userVideo = useRef(null);
   const connectionRef = useRef();
-
+  // const reactNavigator = useNavigate();
+  
   const videoOn=()=>{
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then((currentStream) => {
       setStream(currentStream);
-
+      
       myVideo.current.srcObject = currentStream;
     });
-  
+    
   }
   useEffect(() => {
     // navigator.mediaDevices.getUserMedia({audio:true, video:true})
     // .then(stream1 => myVideo.srcObject = stream1)
     // .then(stream1 => setStream(stream1))
     // .catch(function(err) {
-    //    console.log(err);
-    // });
-    
-    videoOn();
-   
-    socket.on('me', (id) => setMe(id));
+      //    console.log(err);
+      // });
+      
+      const init=async()=>{
+        socket.current=await initSocket();
+        socket.current.on('connect_error', (err) => handleErrors(err));
+            socket.current.on('connect_failed', (err) => handleErrors(err));
+            function handleErrors(e) {
+              console.log('socket error', e);
+              toast.error('Socket connection failed, try again later.');
+              // reactNavigator('/');
+          }
+        socket.current.on('me', (id) => setMe(id));
     console.log(me);
-    socket.on('callUser', ({ from, name: callerName, signal }) => {
+    socket.current.on('callUser', ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-    socket.on("recieve_message", (data) => {
+    socket.current.on("recieve_message", (data) => {
       console.log(data)
       setrecivemessage(data.message);
       // setTimeout(() => {
       //   setrecivemessage("");
       // }, 10000);
     })
+      }
+        init();
+        videoOn();
+        // socket.current = io('http://localhost:3001');
+      
     console.log(recivemessage)
   }, []);
-
-
 
  
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
     setOtherUser(id);
     peer.on('signal', (data) => {
-      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+      socket.current.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
 
     peer.on('stream', (currentStream) => {
       userVideo.current.srcObject = currentStream;
     });
 
-    socket.on('callAccepted', (signal) => {
+    socket.current.on('callAccepted', (signal) => {
       setCallAccepted(true);
 
       peer.signal(signal);
@@ -90,7 +109,7 @@ const Webrtcconnection = ({ children }) => {
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      socket.emit('answerCall', { signal: data, to: call.from });
+      socket.current.emit('answerCall', { signal: data, to: call.from });
     });
 
     peer.on('stream', (currentStream) => {
@@ -117,7 +136,7 @@ const Webrtcconnection = ({ children }) => {
 // }
 const sendMessage = () => {
   console.log("runn")
-  socket.emit("send_message", {message,otherUser});
+  socket.current.emit("send_message", {message,otherUser});
 };
   const leaveCall = () => {
     setCallEnded(true);
@@ -148,7 +167,10 @@ const sendMessage = () => {
     message,
     setmessage,
     recivemessage,
-    sendMessage
+    sendMessage,
+    socket,
+    otherUser,
+    connectionRef
   }} >
     {children}
   </Webrtccontext.Provider>)

@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React,{useContext,useEffect} from "react";
 import Bottombar from "../Bottombar/Bottombar";
 import Chatbox from "../Chatbox/Chatbox";
 import Header from "../Header/Header";
@@ -7,7 +7,24 @@ import Videocomponent from "../VideoComponent/Videocomponent";
 import Webrtccontext from "../../context/webrtc/Webrtccontext";
 import "./home.css";
 const Home = () => {
-  const {name,callAccepted,myVideo,userVideo,callEnded,stream,call} = useContext(Webrtccontext);
+  
+  const {name,connectionRef,callAccepted,myVideo,videoOn,userVideo,callEnded,stream,call} = useContext(Webrtccontext);
+  useEffect(() => {
+    const init=async()=>{
+      await videoOn()
+      
+      if(connectionRef.current){
+      
+        connectionRef.current.on('stream', (currentStream) => {
+        userVideo.current.srcObject = currentStream;
+      });
+    }
+   
+
+  }
+  }, [connectionRef.current])
+  
+
   return (
     // <div className=' d-flex flex-nowrap  my-2 ' style={{"maxHeight":95+"vh"}}>
     //    <div className="d-flex">
