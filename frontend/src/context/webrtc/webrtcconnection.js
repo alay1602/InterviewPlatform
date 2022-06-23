@@ -30,7 +30,7 @@ const Webrtcconnection = ({ children }) => {
   // const reactNavigator = useNavigate();
   
   const videoOn=()=>{
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then((currentStream) => {
       setStream(currentStream);
       
