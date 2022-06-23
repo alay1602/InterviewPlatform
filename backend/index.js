@@ -36,6 +36,10 @@ io.on("connection", (socket) => {
 		console.log(data)
 		socket.to(data.otherUser).emit("code-change",data.code)
 	})
+	socket.on('canvas-data',(data)=>{
+		
+		socket.to(data.otherUser).emit("canvas-data",data)
+	})
 });
 server.listen(3001,()=>{
     console.log("server started");
