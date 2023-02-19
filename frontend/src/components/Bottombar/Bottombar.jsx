@@ -79,11 +79,12 @@ const Bottombar = () => {
           </ul>
 
           <li class="nav-item">
-              {/* <a class="nav-link" href="#"> */}
-              {/* <Chatbox/> */}
-              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onClick={handlemessage}>Chat</button>
-                        {/* <img src={tel} className="img-fluid" alt="" />      */}
-              {/* </a> */}
+            
+              {/* <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" >Chat</button> */}
+              <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handlemessage}>
+   chat
+</button>
+
             </li>
         </div>
       </nav>

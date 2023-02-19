@@ -3,7 +3,6 @@ import { useRef, useEffect, useContext } from "react";
 import axios from "axios";
 import "./codeIDE.css";
 import PlayCircleOutlineOutlinedIcon from "@mui/icons-material/PlayCircleOutlineOutlined";
-// import Editor from './Editor'
 import Codemirror from "codemirror";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/dracula.css";
@@ -28,7 +27,7 @@ const CodeIDE = () => {
           theme: "dracula",
           autoClosetags: true,
           autoClodeBrackets: true,
-          linenumber: true,
+          lineNumbers: true,
         }
       );
       editorRef.current.on("change", (instance, changes) => {

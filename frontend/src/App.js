@@ -23,7 +23,7 @@ function App() {
             <Route path="/CodeIde" element={<CodeIDE />} />
             <Route path="/" element={<Home />} />
             <Route path="/WhiteBoard" element={<Whiteboard />} />
-            <Route path="/contect" element={<Contect />} />
+            {/* <Route path="/contect" element={<Contect />} /> */}
           </Routes>
           <div className="d-flex flex-column">
           <Videocomponent />

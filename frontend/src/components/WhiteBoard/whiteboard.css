@@ -1,12 +1,23 @@
-.container{
+/* .container{
     position: relative;
     width: 70%;
     height: 100%;
     background: black;
+} */
+.color-picker-container{
+    text-align: center;
+    display: inline;
+    /* color:white; */
 }
-.color-picker-conatiner{
+.brushsize-container{
+    display:inline;
+    /* color:white; */
+    margin-left: 12px;
+}
+.tool-section{
     text-align: center;
 }
+
 .board-container{
     width: 90%;
     height: 90%;

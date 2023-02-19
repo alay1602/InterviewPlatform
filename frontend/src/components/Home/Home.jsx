@@ -26,17 +26,9 @@ const Home = () => {
 
 
   return (
-    // <div className=' d-flex flex-nowrap  my-2 ' style={{"maxHeight":95+"vh"}}>
-    //    <div className="d-flex">
-    //         <Sidebar />
-    //       </div>
-
+   
     <div className="mx-2 row w-100" >
-      {/* <div className="col-md-1"> */}
-      {/* <div className="d-flex vh-100  ">
-            <Sidebar />
-          </div> */}
-      {/* </div> */}
+  
       <div className=" mh-100  ">
         <div className="mx-2 row">
           <Header />
